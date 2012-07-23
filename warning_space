@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+
+import os, subprocess
+
+limit = 95
+exceeded = False
+res = filter(None,subprocess.Popen(['df','-lTPkh'],
+                       stdout=subprocess.PIPE).communicate()[0].split('\n')[1:])
+
+for line in res:
+    line = line.split()
+    percent = eval(line[-2][:-1])
+    if percent > limit:
+        print 'Warining : %s (%d%%) has exeeded limit (%d%%)' % (line[0], percent, limit)
+        exeeded = True
+
+if not exceeded:
+    print 'Disk Space ... OK'

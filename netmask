@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+#@auteur : Omar AKHAM
+##Masque sous reseau
+
+import sys
+
+def mask_calc(i):
+    """function for calculating mask of a given i"""
+    netmask = '00000000000000000000000000000000'
+    for j in range(i):
+        netmask = netmask[:j]+'1'+netmask[j+1:]
+    SEG1 =  netmask[:8]
+    SEG2 = netmask[8:16]
+    SEG3 = netmask[16:24]
+    SEG4 = netmask[24:]
+    bin_mask = SEG1+'.'+SEG2+'.'+SEG3+'.'+SEG4
+    dec_mask = str(int(SEG1,2))+'.'+str(int(SEG2,2))+'.'+str(int(SEG3,2))+'.'+str(int(SEG4,2))
+    return dict(_bin=bin_mask, _dec=dec_mask)
+    
+if len(sys.argv) == 1:
+    for i in range(0,33):
+        mask = mask_calc(i)
+        print '/%d \t %s \t %s'%(i, mask['_dec'],mask['_bin'])
+        if i in [8,16,24,32]:
+            print '\n'
+elif len(sys.argv) == 2:
+    i = int(sys.argv[1])
+    mask = mask_calc(i)
+    print '/%d \t %s \t %s'%(i, mask['_dec'],mask['_bin'])
+

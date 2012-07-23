@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+#@auteur: Omar AKHAM
+##IP/Host Location
+
+import sys, re, GeoIP
+
+if len(sys.argv) != 2:
+    print('Usage : %s <IP_ADRESS|HOST_NAME>'%(sys.argv[0]))
+    exit()
+
+ip_host = sys.argv[1]
+ip_regex = r'((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
+gi = GeoIP.new(GeoIP.GEOIP_MEMORY_CACHE)
+if re.match(ip_regex,ip_host):
+	ccode = gi.country_code_by_addr(ip_host)
+	cname = gi.country_name_by_addr(ip_host)
+else:
+	ccode = gi.country_code_by_name(ip_host)
+	cname = gi.country_name_by_name(ip_host)
+
+print('%s is located in %s'% (ip_host,cname))

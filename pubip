@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+#@auteur : Omar AKHAM
+##Print Public IP Adress
+
+import urllib2
+
+print('Public IP Adress is :'
+      ' %s' % urllib2.urlopen('http://automation.whatismyip.com/n09230945.asp').read())
+
+
