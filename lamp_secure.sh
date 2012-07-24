@@ -36,7 +36,7 @@ echo "Secure Apache2/PHP5 Configuration ..."
 ###> Restrict APACHE/PHP Information Leakage
 sed -i 's/^expose_php = On/expose_php = Off/g' $PHP_INI_FILE
 sed -i 's/^ServerSignature On/ServerSignature Off/g' $APACHE_CONF_FILE
-sed -i 's/^ServerTokens OS\|Full\|Minimal\|Minor\|Major/ServerTokens Prod/g' $APACHE_CONF_FILE
+sed -i 's/^ServerTokens \(OS\|Full\|Minimal\|Minor\|Major\)/ServerTokens Prod/g' $APACHE_CONF_FILE
 
 ###> Log all php errors
 sed -i 's/^display_errors = On/display_errors = Off/g' $PHP_INI_FILE
@@ -56,10 +56,10 @@ sed -i 's/^max_input_time = \(\w\+\)/max_input_time = '$MAX_INPUT_TIME'/g' $PHP_
 sed -i 's/^memory_limit = \(\w\+\)/memory_limit = '$PHP_MEMORY_LIMIT'/g' $PHP_INI_FILE
 
 ###> Disabling dangerous functions
-sed -i 's/^disable_functions =\(\w*\)/disable_functions = exec,passthru,shell_exec,system,proc_open,popen,curl_exec,curl_multi_exec,parse_ini_file,show_source/g' $PHP_INI_FILE
+sed -i 's/^disable_functions =\(\w*\)$/disable_functions = exec,passthru,shell_exec,system,proc_open,popen,curl_exec,curl_multi_exec,parse_ini_file,show_source/g' $PHP_INI_FILE
 
 ###> PHP Base dir
-sed -i 's/^;open_basedir =\(\w*\)/open_basedir = '$BASE_DIR'/g' $PHP_INI_FILE
+sed -i "s/^;open_basedir =\(\w*\)/open_basedir = $(echo $BASE_DIR|sed -e 's/\//\\\//g')/g" $PHP_INI_FILE
 
 ## Write protect Apache, Php, Mysql configuration files
 echo "Write protect configuration files ..."
