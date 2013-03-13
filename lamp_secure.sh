@@ -40,7 +40,7 @@ sed -i 's/^ServerTokens \(OS\|Full\|Minimal\|Minor\|Major\)/ServerTokens Prod/g'
 
 ###> Log all php errors
 sed -i 's/^display_errors = On/display_errors = Off/g' $PHP_INI_FILE
-sed -i 's/^log_errors = Off/display_errors = On/g' $PHP_INI_FILE
+sed -i 's/^log_errors = Off/log_errors = On/g' $PHP_INI_FILE
 sed -i 's/^;error_log = php_errors.log/error_log = php_errors.log/g' $PHP_INI_FILE
 
 ###> Turn Off Remote Code Execution

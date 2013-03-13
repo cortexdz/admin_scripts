@@ -4,6 +4,7 @@
 ## Source : http://owncloud.org/support/install/
 
 _WWW="/srv/www"
+_owncloud_vhost="/etc/apache2/sites-available/owncloud"
 
 # Install Lamp
 apt-get install apache2 php5 mysql-server php5-gd php5-mysql php5-common mp3info curl libcurl3 libcurl4-openssl-dev php5-curl zip bzip2
@@ -16,3 +17,16 @@ tar -xjf /tmp/owncloud-latest.tar.bz2
 mkdir $_WWW
 mv owncloud $_WWW/
 chown -R www-data:www-data $_WWW/owncloud
+
+# Configure Database
+
+# Configure apache vHost
+cat > $owncloud_vhost << EOF
+
+
+EOF
+
+a2dissite default
+a2ensite owncloud
+
+service apache2 reload
